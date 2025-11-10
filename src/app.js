@@ -52,7 +52,7 @@ app.get("/./" , (req,res) => {
      // console.log(req.query);
      res.send({ LastName: "singh"});
 });
-app.get("/.*fly$/" , (req,res) => {
+app.get(/.*fly$/ , (req,res) => {
      // console.log(req.query);
      res.send({ LastName: "singh"});
 });
