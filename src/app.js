@@ -2,25 +2,55 @@ const express = require("express");
 
 const app = express();
 
-const {adminAuth,userAuth } = require("./middlewares/auth");
+// const {adminAuth,userAuth } = require("./middlewares/auth");
 
 // app.use("/route", rh1, [rh2, rh3], rh4, rh5);
 // if i put array all the route handler or some of the router eg: 2,3 ,
 // then this will not effect on my resoponse or a code
 
-app.use("/Admin" , adminAuth);
+// app.use("/Admin" , adminAuth);
 
-app.get("/user", userAuth, (req,res) => {
-     res.send("User data send");
+// app.get("/user", userAuth, (req,res) => {
+//      res.send("User data send");
+// });
+
+// app.get("/getUserData",  (req,res) => {
+
+//      throw new Error("djafljflk");
+//      res.send("User data send");
+// });
+app.use("/",  (err,req,res,next) => {
+     if(err) {
+     res.status(500).send("Something error contact to the team");
+   }
 });
 
-app.post("/user/login", (req,res) => {
-     res.send("User login succefully");
+app.get("/getUserData", (req,res) => {
+     try{
+       throw new Error("sdjfkldj");
+       res.send("user data sent");
+
+     }
+     catch{
+          res.status(500).send("Something went wrong pls contact us");
+     }
+})
+
+app.use("/",  (err,req,res,next) => {
+     if(err) {
+     res.status(500).send("Something error contact to the team");
+   }
 });
 
-app.get("/Admin/getAllData", (req,res) =>{
-     res.send("All data send");
-});
+
+
+// app.post("/user/login", (req,res) => {
+//      res.send("User login succefully");
+// });
+
+// app.get("/Admin/getAllData", (req,res) =>{
+//      res.send("All data send");
+// });
 
 
 // app.use("/user", (req,res,next) => {
