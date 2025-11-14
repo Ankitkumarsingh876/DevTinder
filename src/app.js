@@ -5,11 +5,37 @@ const User = require("./models/user.js");
 const app = express();
 app.use(express.json());
 
+app.delete("/user", async(req,res) =>{
+     const userId = req.body.userId;
+
+     try{
+         const user = await User.findByIdAndDelete(userId);
+         res.send("user deleted succefully");
+     }
+     catch(err) {
+          res.status(400).send("something went wrong");
+     }
+})
+
+app.patch("/usr", async(req,res) => {
+     const userId = req.body.userId;
+     const data = req.body;
+     console.log(data);
+
+     try{
+          await User.findByIdAndUpdate(userId, data);
+          res.send("user updated succefully");
+     }
+     catch(err) {
+          res.status(400).send("something went wrong");
+     }
+})
+
 app.get("/user" , async (req,res) => {
-     const userEmail = req.body.email;
+     const userEmail = req.body._Id;
      
      try{
-          const user = await User.findOne();
+          const user = await User.findOne({_Id: userEmail});
           res.send(user);
           // const user = await User.find({ email: userEmail});
           // if(user.length === 0) {
