@@ -3,9 +3,15 @@ const connectDB = require("./config/database.js");
 const User = require("./models/user.js");
 const {validateSignupData} = require("./utils/validation.js");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
+const jwt  = require("jsonwebtoken");
+const {userAuth} = require("./middlewares/auth.js");
 
 const app = express();
+
 app.use(express.json());
+app.use(cookieParser());
+
 
 app.delete("/user", async(req,res) =>{
      const userId = req.body.userId;
@@ -96,6 +102,16 @@ app.post("/signup" , async (req,res)  => {
 
 })
 
+app.get("/profile", userAuth, async( req,res) => {
+    try {
+
+     const user = req.user;
+     res.send(user);}
+     catch(err){
+          res.status(400).send("Something went wrong"+ err.message);
+     }
+})
+
 app.post("/login", async(req,res) => {
 
      try{
@@ -110,7 +126,13 @@ app.post("/login", async(req,res) => {
           const isPasswordValid = await bcrypt.compare(password, user.password);
 
           if(isPasswordValid){
-               res.send("Login succfully")
+
+               const token = await jwt.sign({_id: user._id}, "Devtinder@123", );
+
+               console.log(token);
+
+              res.cookie("token", token); 
+              res.send("Login succfully")
           }
           else{
                throw new Error("Invalid credential");
@@ -121,6 +143,12 @@ app.post("/login", async(req,res) => {
      catch(err){
           res.status(400).send("Something went wrong"+ err.message);
      }
+})
+
+app.post("/conncectionRequest",userAuth, async(req,res) => {
+     
+     const user = req.user;
+     res.send(user.firstName +" sent a connetion");
 })
 
 connectDB()
