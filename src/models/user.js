@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
     },
     photoURL: {
         type: String,
-        default: "https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/",
+        default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm77k_Kb1GNPD1OyN535NyIf34ktwEEjfekbtqfP2pWO3wk5YLUI7T3YcNa-hPSekbo5E&usqp=CAU",
         validate(value) {
             if(!validator.isURL(value)){
                 throw new Error("invalid email " + value);
