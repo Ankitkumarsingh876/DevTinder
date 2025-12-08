@@ -3,8 +3,10 @@ const connectDB = require("./config/database.js");
 const cookieParser = require("cookie-parser");
 const app = express();
 const cors = require("cors");
+const http = require("http");
 
 require('dotenv').config();
+
 
 app.use(cors({
    origin: "http://localhost:5173",
@@ -17,6 +19,7 @@ const authRouter = require("./Routers/auth.js");
 const profileRouter = require("./Routers/profile.js");
 const requestRouter = require("./Routers/request.js");
 const userRouter = require("./Routers/user.js");
+const intializeSocket = require("./utils/socket.js");
 
 app.use("/", authRouter);
 app.use("/", profileRouter);
@@ -91,12 +94,14 @@ app.use("/", userRouter);
 
 // app.get("/feed", (req,res) => {});
 
+const server = http.createServer(app);
 
+intializeSocket(server);
 
 connectDB()
    .then(() => {
      console.log("Database connected succefully");
-     app.listen(process.env.PORT, () => {
+     server.listen(process.env.PORT, () => {
      console.log("server is succesfully listening 7777");
      });
    })
