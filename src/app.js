@@ -20,11 +20,13 @@ const profileRouter = require("./Routers/profile.js");
 const requestRouter = require("./Routers/request.js");
 const userRouter = require("./Routers/user.js");
 const intializeSocket = require("./utils/socket.js");
+const chatRouter = require("./Routers/chat.js");
 
 app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
+app.use("/", chatRouter);
 
 // app.delete("/user", async(req,res) =>{
 //      const userId = req.body.userId;
