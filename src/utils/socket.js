@@ -44,17 +44,6 @@ const intializeSocket = (server) => {
             ],
           });
 
-          if (!isConnected) {
-            // block: not connected / not accepted
-            socket.emit("errorMessage", {
-              message:
-                "Message blocked: you can only chat with users who accepted your connection.",
-            });
-            console.log(
-              `Blocked message from ${userId} to ${targetUserId} — not connected.`
-            );
-            return;
-          }
           const roomId = getSecretRoomId(userId, targetUserId);
           console.log(firstName + " " + text);
 
