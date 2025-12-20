@@ -10,8 +10,8 @@ require('dotenv').config();
 
 app.use(cors({
    origin: ["http://localhost:5173",
-         "https://dev-tinder-web-ochre.vercel.app",
-   ],
+      "https://dev-tinder-web-ochre.vercel.app/",
+   ],       
    credentials: true,
 }));
 app.use(express.json());
